@@ -1,40 +1,46 @@
 package com.example.oauthdemo2.controller;
 
-import com.example.oauthdemo2.WelcomeClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 public class WebClienteController {
 
-    //private final WebClient webClient;
-
-    private final WelcomeClient webClient;
+    private final WebClient webClient;
 
     @Autowired
-    public WebClienteController(WelcomeClient webClient) {
+    public WebClienteController(WebClient webClient) {
         this.webClient = webClient;
     }
 
-    //@GetMapping("/webclient")
-    /*public String test() {
-        webClient.get()
-          .uri("http://127.0.0.1:8090/resources")
-          //.attributes()
+    @GetMapping("/webclient")
+    public String test2() {
+        return webClient
+          .get()
+          .uri("http://localhost:8090/resources")
+          .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId("myoauth2"))
           .retrieve()
           .bodyToMono(String.class)
-          .subscribe(System.out::println);
-        return "webclient module";
-    }*/
-
-    @GetMapping("/webclient")
-    public String[] test2() {
-        String[] welcome = webClient.getWelcome();
-        return welcome;
+          .map(s -> "data received: " + s)
+          .block();
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/google")
+    public String testGoogle() {
+        return webClient
+          .get()
+          .uri("http://localhost:8090/resources")
+          .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId("google"))
+          .retrieve()
+          .bodyToMono(String.class)
+          .map(s -> "data received: " + s)
+          .block();
+    }
+
+    @GetMapping("/")
     public String welcome() {
         return "welcome! ";
     }

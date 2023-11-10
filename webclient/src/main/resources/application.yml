@@ -7,16 +7,20 @@ spring:
       client:
         registration:
           myoauth2:
-            provider: spring
+            provider: test
             client-id: client
             client-secret: secret
+            client-name: myoauth2
             scope: openid
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/myoauth2"
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_post
+            #redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/myoauth2"
           google:
             client-id: "248931140376-lcf1s8c9o669j44g1n9sb22mt57oiili.apps.googleusercontent.com"
             client-secret: "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"
         provider:
-          spring:
-            issuer-uri: "http://localhost:9000"
+          #spring:
+          #  issuer-uri: "http://localhost:9000"
+          test:
+            token-uri: "http://localhost:9000/oauth2/token"
 
