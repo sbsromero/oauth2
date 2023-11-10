@@ -1,5 +1,5 @@
-rootProject.name = 'oauth-demo2'
+rootProject.name = 'oauth-demo'
 
-include ':auth'
-include ':webclient'
-include ':resource-server'
+include ':poc-auth'
+include ':poc-resource-server'
+include ':poc-webclient'
